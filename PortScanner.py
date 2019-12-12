@@ -1,12 +1,6 @@
+import sys
 import socket
 from threading import Thread
-
-host=input("host>")
-from_port=int(input("start scan from port>"))
-to_port=int(input("finish scan to port>"))
-couting_open=[]
-couting_close=[]
-threads=[]
 
 def scan(port):
     s=socket.socket()
@@ -21,16 +15,30 @@ def scan(port):
         print(str(port)+"-> close")
         s.close()
 
-for i in range(from_port,to_port+1):
-    t=Thread(target=scan,args=(i,))
-    threads.append(t)
-    t.start()
-    if i==to_port+1:
-        t.close()
 
-print("###############")
-print("Opened Doors")
-print(couting_open)
-print("Good Luck :)")
-print("###############")
-print("Developed By Fillipe Henrique")
+host= sys.argv[1]
+from_port = int(sys.argv[3])
+to_port = int(sys.argv[5])
+
+couting_open=[]
+couting_close=[]
+threads=[]
+
+if sys.argv[2] == 'f' and sys.argv[4] == 'to':
+    for i in range(from_port,to_port+1):
+        t=Thread(target=scan,args=(i,))
+        threads.append(t)
+        t.start()
+        if i==to_port+1:
+            t.close()
+    print("###############")
+    print("Opened Doors")
+    print(couting_open)
+    print("Good Luck :)")
+    print("###############")
+    print("Developed By Fillipe Henrique - LUSPEW")
+
+else:
+    print("'{f_param}' and  '{s_param}' are not valid, read more on https://luspew.com/blog/blog.php?id=portscanner".format(f_param=sys.argv[2],s_param=sys.argv[4]))
+
+
